@@ -22,4 +22,66 @@
 }
 .section {
     background-color: #E8F3F8;
+    width:100vw;
+    height: auto;
+}
+.check_text{
+    background-color: #061B25;
+    color: aliceblue;
+    font-family: 'Figtree';
+
+}
+@media (max-width:350px) {
+    .check_text {
+        font-size: 10px;
+    }
+}
+.check_num {
+background-color: #1C89B8;
+color: aliceblue;
+}
+.J{
+    border:5px solid red;
+}
+
+.task_text:focus{
+    outline: none;
+    background-color:  #E8F3F8;
+}
+.todos {
+    margin-bottom: 4rem;
+}
+.todos li {
+  background-color:white; 
+}
+.todos li.complete {
+    background-color:#A4D0E3;
+    text-decoration: line-through;
+    color:#77B8D4;
+}
+
+input[type='checkbox'] {
+    appearance: none;
+    background-color: transparent;
+    margin:0;
+    width:1.5rem;
+    height:1.5rem;
+    border: 2px solid #082937;
+    border-radius: 100%;
+    display: grid;
+    place-content: center;
+
+}
+input[type='checkbox']::before{
+    content:url(./img/done\ task.png);
+    transform: scale(0);
+    transition: 0.25 ease-in-out;
+
+}
+input[type='checkbox']:checked{
+    background-color:#77B8D4;
+    border-color: #77B8D4;
+}
+input[type='checkbox']:checked::before{
+   transform: scale(1);
 }

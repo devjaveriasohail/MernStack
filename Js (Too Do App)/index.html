@@ -13,18 +13,53 @@
 
 <body>
     <header class=" header  p-sm-4 ">
-        <div class="container w-sm-75 d-flex flex-column justify_content-start align-items-start">
+        <div class="container w-sm-75 d-flex flex-column  align-items-start">
             <h2 class=" header_text p-1 pt-4">Today</h2>
-            <div class="container w-sm-75 d-flex flex-row justify_content-center align-items-center">
-                <div class="w-75 py-4 input-group ">
-                    <input type="text" class="form-control header_input" aria-label="Sizing example input"
+            <div class="container w-sm-75 d-flex flex-row align-items-center">
+                <form action=""  id="todo-form" class="w-75 py-4 input-group ">
+                    <input type="text" class="form-control header_input"  placeholder="Add task" aria-label="Sizing example input"
                         aria-describedby="inputGroup-sizing-lg">
-                </div>
-                <button class="header_btn p-sm-2 m-2 rounded">ADD TASK</button>
+                </form>
+                <button type="submit" class="header_btn p-sm-2 m-2 rounded">ADD TASK</button>
             </div>
         </div>
     </header>
-    <section class="section">
+    <section class="section d-flex  flex-md-row flex-column justify-content-center align-items-center">
+        <div class=" d-flex flex-md-column flex-row">
+            <div class="section_check d-flex flex-row m-1">
+                <p class=" check_text p-2 rounded-start">Remaining</p>
+                <p id="remaining-tasks" class=" check_num p-2 rounded-end ">1</p>
+            </div>
+            <div class="section_check d-flex flex-row m-1">
+                <p class=" check_text p-2 rounded-start">Completed</p>
+                <p id="completed-tasks" class=" check_num p-2 rounded-end ">1</p>
+            </div>
+            <div class="section_check d-flex flex-row m-1 ">
+                <p class=" check_text p-2 rounded-start">ToTal</p>
+                <p id="total-tasks" class=" check_num p-2 rounded-end ">1</p>
+            </div>
+        </div>
+        <ul class="todos ">
+            <li class=" m-3 d-flex flex-row p-2 rounded justify-content-between align-items-center">
+                <div class="d-flex align-items-center ">
+                    <input type="checkbox" class="mx-2" name="tasks" id="1">
+                    <span contenteditable="true" class="task_text p-2">Task 1</span>
+                </div>
+                <button title="Remove task" class="remove-task btn">
+                    <img src="./img/remove task.png">
+                </button>
+            </li>
+            
+            <li class="complete m-3 d-flex flex-row p-2 rounded justify-content-between align-items-center">
+                <div class="d-flex align-items-center ">
+                    <input type="checkbox" class="mx-2" name="tasks" id="1">
+                    <span>Task 1</span>
+                </div>
+                <button title="Remove task" class="remove-task btn">
+                    <img src="./img/remove task.png">
+                </button>
+            </li>
+        </ul>
 
     </section>
 
