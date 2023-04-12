@@ -13,6 +13,7 @@
 .header_input {
     background-color:  #082937!important;
     /* background-color: transparent; */
+    color: #e8f3f8 !important;
 }
 @media (max-width:400px) {
     .header_btn {
