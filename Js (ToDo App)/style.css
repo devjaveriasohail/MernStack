@@ -9,10 +9,10 @@
     font-family: 'Figtree';
     background-color: #FF8C42;
     color: white;
+
 }
 .header_input {
     background-color:  #082937!important;
-    /* background-color: transparent; */
     color: #e8f3f8 !important;
 }
 @media (max-width:400px) {
@@ -44,7 +44,6 @@ color: aliceblue;
 .J{
     border:5px solid red;
 }
-
 .task_text:focus{
     outline: none;
     background-color:  #E8F3F8;
@@ -54,6 +53,7 @@ color: aliceblue;
 }
 .todos li {
   background-color:white; 
+  list-style: none;
 }
 .todos li.complete {
     background-color:#A4D0E3;

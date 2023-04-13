@@ -61,6 +61,7 @@ todoList.addEventListener("keydown", function (e) {
 function createTask(task) {
   const taskEl = document.createElement("li");
   taskEl.setAttribute("id", task.id);
+
   const taskElMarkup = `
     <div class="checkbox-wrapper">
       <input type="checkbox" id="${task.name}-${task.id}" name="tasks" ${
@@ -92,6 +93,7 @@ function removeTask(taskId) {
   tasks = tasks.filter((task) => task.id !== parseInt(taskId));
   localStorage.setItem("tasks", JSON.stringify(tasks));
   document.getElementById(taskId).remove();
+  console.log("",taskId)
   countTasks();
 }
 
