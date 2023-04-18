@@ -1,31 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Homecss.css";
+import MovieCard from './MovieCard';
 import search from "./img/search.svg"
-
 import { useEffect } from 'react';
 
 const ApiUrl = 'http://www.omdbapi.com?apikey=17dc3f5b';
 
 const Home = () => {
+  // calling the set movie though api
+  const [movie, setMovie] = useState([])
+  const [searchterm, setSearchterm] = useState("");
   // calling the api
-  const searchMovie = async (title) => {
-    const response = await fetch(`${ApiUrl}&s={title}`)
+  const searchMovie = async(title) => {
+    const response = await fetch(`${ApiUrl}&s=${title}`)
     const data = await response.json();
-
-    //console.log(data.Search)
+    setMovie(data.Search);
+    console.log(data.Search)
   }
-
+  //
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+    searchMovie(searchterm);
+    }
+  };
   // calling the useeffect to fetch data form api
   useEffect(() => {
-    searchMovie("spiderman")
+    searchMovie("searchterm")
 
   }, [])
-  let movie1 ={"Poster": "https://m.media-amazon.com/images/M/MV5BYWM0MDI1ZmItZTYzNi00ZWVlLTg5MTctNzllNjY2ZTI3NDhhXkEyXkFqcGdeQXVyNDk5MjA2MQ@@._V1_SX300.jpg"
-   ,"Title": "Reign of Judges: Title of Liberty - Concept Short"
-   ,"Type": "movie"
-  ,"Year": "2018"
-}
-   console.log(movie1.Year)
+
   return (
     <div className='app'>
       <h1>Movie House</h1>
@@ -33,33 +36,28 @@ const Home = () => {
       <div className='search'>
         <input
           placeholder='Search for movies'
-          value=" "
-          onChange={() => { }}
+          value={searchterm}
+          onChange={(e) => setSearchterm(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
         <img
-          src={search} alt="saerch"
-          onClick={() => { }} />
+          src={search} alt="search"
+          onClick={() => searchMovie(searchterm)} />
       </div>
-      {/* Poster: "https://m.media-amazon.com/images/M/MV5BYWM0MDI1ZmItZTYzNi00ZWVlLTg5MTctNzllNjY2ZTI3NDhhXkEyXkFqcGdeQXVyNDk5MjA2MQ@@._V1_SX300.jpg"
-Title: "Reign of Judges: Title of Liberty - Concept Short"
-Type: "movie"
-Year: "2018"
-imdbID: "tt4275958" */}
-      <div className='container'>
-        <div className='movie'>
-          <div>
-            <p>{movie1.Year}</p>
+      {
+        movie?.length > 0
+          ? (
+            <div className='container'>
+              {movie.map((movie) => (
+                <MovieCard movie={movie} />
+              ))}
+            </div>
+          ) : (<div className='empty'>
+            <h2>No Movies found</h2>
           </div>
-          <div>
-            <img src={movie1.Poster !== 'N/A' ? movie1.Poster : "https://via.placeholder.com/400"}
-              alt="img" />
-          </div>
-          <div>
-            <span>{movie1.Type}</span>
-            <h3>{movie1.Title}</h3>
-          </div>
-        </div>
-      </div>
+          )
+      }
+
 
     </div>
   )
