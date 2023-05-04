@@ -8,12 +8,33 @@ const EventEmitter = require("events");
 class Emitter extends EventEmitter { };
 //intialize object
 const myEmitter = new Emitter();
-
+myEmitter.on("log", (msg,fileName) => logEvents(msg,fileName));
 //port to host
 const PORT = process.env.PORT || 3500;
+// function to server the file
+const serveFile= async(filepath,contentType,response)=>{
+    try{
+          const rawData = await fsPromises.readFile(
+            filepath,
+            !contentType.includes("image")?"utf8":"")
+          const data=contentType=== "application/json"
+          ?JSON.parse(rawData):rawData;
+          response.writeHead(
+            filepath.includes("404.html")? 404 :200,
+            {"Content-Type":contentType})
+          response.end(
+            contentType === "application/json"? JSON.stringify(data):data
+          );
+    }catch(err){
+        console.log(err);
+        myEmitter.emit("log", `${err.name}\t${err.message}`,"errLog.txt")
+        response.statusCode=500;
+        response.end();
+    }
+}
 const server = http.createServer((req, res) => {
     console.log(req.url, req.method);
-
+    myEmitter.emit("log", `${req.url}\t${req.method}`,"reqLog.txt")
     // specfing the path
     const extension = path.extname(req.url);
     let contentType;
@@ -52,10 +73,23 @@ const server = http.createServer((req, res) => {
 const fileExists=fs.existsSync(filepath);
 if(fileExists){
     // serve the file
+    serveFile(filepath,contentType,res)
 }else {
-    //404
-    //301 redirect
-    console.log(path.parse(filepath))
+    //404  301 redirect
+    switch(path.parse(filepath).base){
+        case "old-page.html":
+            res.writeHead(301,{"Location":"/new-page.html"})
+            res.end()
+            break;
+            case "www-page.html":
+                res.writeHead(301,{"Location":"/"})
+            res.end()
+            break;
+            default:
+                // server a 404 response
+                serveFile(path.join(__dirname,"views","404.html"),"text",res)
+    }
+    //console.log(path.parse(filepath))
 }
     /* 
     // one way using switch statemrnt but not dynamic and take alot of space
@@ -92,6 +126,6 @@ if(fileExists){
 })
 
 server.listen(PORT, () => console.log(`server running on port ${PORT}`))
-// add listener for log event
-myEmitter.on("log", (msg) => logEvents(msg));
-myEmitter.emit("log", "log event emitted!")
+
+
+
