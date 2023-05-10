@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express();
 const path = require("path");
-
+// middleware
 //port to host
 const PORT = process.env.PORT || 3500;
 
