@@ -2,9 +2,11 @@ const express = require('express')
 const router = express.Router()
 const {setGoals,getGoals,putGoals,deleteGoals}=require ('../controlles/goalsControllers')
 
+const {protect}= require ("../middleware/authmiddleware")
+
 // CRUD calling routes
-router.route('/').get(getGoals).post(setGoals)
-router.route('/:id').delete(deleteGoals).put(putGoals)
+router.route('/').get(protect,getGoals).post(protect,setGoals)
+router.route('/:id').delete(protect,deleteGoals).put(protect,putGoals)
 
 module.exports=router
 
